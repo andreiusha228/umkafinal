@@ -67,7 +67,7 @@ export const translations = {
     },
     footer: {
       tagline: 'umka — ai shopping. simplified.',
-      credits: 'created by andrey bukovsky and maxim danilov',
+      credits: 'created by andrey bukovsky',
     },
     chat: {
       welcome: "Hello! I'm Umka, your cooking assistant. Tell me what you'd like to cook!",
@@ -142,7 +142,7 @@ export const translations = {
     },
     footer: {
       tagline: 'umka — ai nákupy. zjednodušené.',
-      credits: 'vytvořili andrey bukovsky a maxim danilov',
+      credits: 'created by andrey bukovsky',
     },
     chat: {
       welcome: "Ahoj! Jsem Umka, tvůj asistent pro vaření. Řekni mi, co bys chtěl uvařit!",
