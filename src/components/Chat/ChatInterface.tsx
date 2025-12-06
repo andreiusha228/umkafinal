@@ -126,9 +126,21 @@ export function ChatInterface() {
 
     } catch (error) {
       console.error('Error sending message:', error);
+      let errorMessage = 'Sorry, an error occurred. Please try again.';
+      
+      // Try to get more specific error message
+      if (error instanceof Error) {
+        console.error('Error details:', error.message);
+        if (error.message.includes('OPENAI_API_KEY')) {
+          errorMessage = 'API key is not configured. Please check your environment variables.';
+        } else if (error.message.includes('HTTP')) {
+          errorMessage = `Server error: ${error.message}. Please check the console for details.`;
+        }
+      }
+      
       const errorMsg: Message = {
         id: (Date.now() + 2).toString(),
-        content: 'Sorry, an error occurred. Please try again.',
+        content: errorMessage,
         isUser: false,
         type: 'message',
         timestamp: new Date(),

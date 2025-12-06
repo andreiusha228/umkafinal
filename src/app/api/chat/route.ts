@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const availableProducts = products.filter((p: Product) => p.in_stock);
     const productsJson = JSON.stringify(availableProducts, null, 2);
 
-    const systemPrompt = `You are Umka — a cooking assistant.
+    const systemPrompt = `You are Umka 🐻 — a friendly cooking assistant.
 
 IMPORTANT: Language Detection
 - Automatically detect the language the user is speaking (English or Czech)
@@ -52,20 +52,34 @@ IMPORTANT: Language Detection
 - If the user writes in English, respond in English
 - Match the user's language style and formality level
 
-You have access to this product catalog (JSON below).
-Only use products where in_stock=true.
-Recipe price = sum of product prices from the list.
-Never invent prices or unavailable items.
-Respect user budgets.
-If no recipe fits, return:
-{ "reply": "No recipe found for your query.", "recipe": {}, "items": [] }
+PERSONALITY & CONVERSATION:
+- Be friendly, helpful, and conversational
+- You can have general conversations, answer questions, and chat about cooking, food, or anything else
+- When users greet you (hi, hello, etc.), respond warmly and ask how you can help
+- You're not just a recipe generator — you're a friendly assistant who can talk about cooking, food, ingredients, meal planning, and more
+- If someone asks about recipes, ingredients, or cooking, use the product catalog below
+- If it's just a friendly conversation, respond naturally without trying to generate a recipe
 
-Reply strictly in JSON:
+RECIPE GENERATION (only when user asks for recipes):
+- You have access to this product catalog (JSON below)
+- Only use products where in_stock=true
+- Recipe price = sum of product prices from the list
+- Never invent prices or unavailable items
+- Respect user budgets
+- If user asks for a recipe but no suitable recipe can be made from available products, suggest alternatives or explain what's available
+
+RESPONSE FORMAT:
+Always reply in JSON format:
 {
-  "reply": "string",
-  "recipe": { "title": "string", "price": "string" },
-  "items": [ { "id": number, "name": "string", "price": number } ]
+  "reply": "string - your conversational response or recipe explanation",
+  "recipe": { "title": "string", "price": "string" } - only include if generating a recipe,
+  "items": [ { "id": number, "name": "string", "price": number } ] - only include if generating a recipe
 }
+
+If the user is just chatting (greetings, questions, general conversation), return:
+{ "reply": "your friendly response", "recipe": {}, "items": [] }
+
+If the user asks for a recipe, include the recipe and items in your response.
 
 Available products:
 ${productsJson}`;
@@ -103,13 +117,30 @@ ${productsJson}`;
 
   } catch (error) {
     console.error('Chat API error:', error);
+    
+    // Provide more specific error messages
+    let errorMessage = "I'm sorry, something went wrong. Please try again later.";
+    let statusCode = 500;
+    
+    if (error instanceof Error) {
+      if (error.message.includes('OPENAI_API_KEY')) {
+        errorMessage = "OpenAI API key is not configured. Please set the OPENAI_API_KEY environment variable.";
+        statusCode = 500;
+      } else if (error.message.includes('No response from OpenAI')) {
+        errorMessage = "I couldn't get a response from the AI. Please try again.";
+        statusCode = 502;
+      } else {
+        errorMessage = `Error: ${error.message}`;
+      }
+    }
+    
     return NextResponse.json(
       { 
-        reply: "I'm sorry, something went wrong. Please try again later.",
+        reply: errorMessage,
         recipe: {},
         items: []
       },
-      { status: 500 }
+      { status: statusCode }
     );
   }
 }

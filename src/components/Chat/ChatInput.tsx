@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -33,25 +33,17 @@ export function ChatInput({ onSendMessage, disabled = false, placeholder }: Chat
   };
 
   return (
-    <div className="p-4 md:p-6 bg-white border-t border-gray-200">
+    <div className="p-4 md:p-6 bg-gray-50">
       <div className="max-w-4xl mx-auto w-full">
-        <form onSubmit={handleSubmit} className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"
-          >
-            <Plus className="w-5 h-5" />
-          </Button>
-          <div className="flex-1 relative">
+        <form onSubmit={handleSubmit} className="flex items-center justify-center">
+          <div className="relative w-full max-w-2xl">
             <Input
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={defaultPlaceholder}
               disabled={disabled}
-              className="w-full pr-12 py-3 text-base rounded-full border-gray-200 bg-gray-50 focus:bg-white focus:border-blue-500 focus:ring-blue-500"
+              className="w-full pr-14 py-3 text-base rounded-full border-gray-200 bg-white focus:bg-white focus:border-blue-500 focus:ring-blue-500 shadow-sm"
             />
             {message.trim() && (
               <Button
@@ -59,9 +51,9 @@ export function ChatInput({ onSendMessage, disabled = false, placeholder }: Chat
                 disabled={disabled}
                 variant="ghost"
                 size="icon"
-                className="absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
+                className="absolute right-1 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-sm"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-5 h-5" />
               </Button>
             )}
           </div>

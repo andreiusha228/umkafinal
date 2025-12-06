@@ -22,16 +22,6 @@ export function ChatMessage({ content, isUser, timestamp }: ChatMessageProps) {
         )}
       >
         <p className="whitespace-pre-wrap">{content}</p>
-        {timestamp && (
-          <p
-            className={cn(
-              "text-xs mt-1",
-              isUser ? "text-blue-100" : "text-gray-500",
-            )}
-          >
-            {timestamp.toLocaleTimeString()}
-          </p>
-        )}
       </div>
     </div>
   );
