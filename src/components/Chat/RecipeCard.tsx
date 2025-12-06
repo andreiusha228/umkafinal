@@ -47,14 +47,14 @@ export function RecipeCard({ title, price, items, onAddToBag, imageUrl }: Recipe
       </div>
       <div className="p-4">
         <h3 className="font-medium text-gray-900 text-base mb-1">{title}</h3>
-        <p className="text-lg font-semibold text-gray-900 mb-4">{price}</p>
+        <p className="text-lg font-semibold text-gray-900 mb-4">{price} Kč</p>
         <div className="mb-4">
           <h4 className="text-sm font-medium text-gray-600 mb-2">Ingredients:</h4>
-          <ul className="space-y-1">
+          <ul className="space-y-1.5">
             {items.map((item) => (
-              <li key={item.id} className="flex justify-between text-sm">
-                <span className="text-gray-700">{item.name}</span>
-                <span className="text-gray-500">{item.price} Kč</span>
+              <li key={item.id} className="flex justify-between items-center text-sm">
+                <span className="text-gray-700 flex-1">{item.name}</span>
+                <span className="text-gray-500 ml-2 whitespace-nowrap">{item.price} Kč</span>
               </li>
             ))}
           </ul>
