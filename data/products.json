@@ -1,0 +1,20 @@
+[
+  { "id": 1, "name": "Free-range chicken breast 300 g", "price": 115, "tags": "meat;protein;local", "in_stock": true },
+  { "id": 2, "name": "Organic long-grain rice 200 g", "price": 42, "tags": "carbs;gluten-free;organic", "in_stock": true },
+  { "id": 3, "name": "Small-batch soy sauce 50 ml", "price": 28, "tags": "condiment;asian;premium", "in_stock": true },
+  { "id": 4, "name": "Local veggie mix 200 g", "price": 32, "tags": "veggies;fresh;seasonal", "in_stock": true },
+  { "id": 5, "name": "Farm Greek yogurt 150 g", "price": 28, "tags": "dairy;healthy;farm", "in_stock": true },
+  { "id": 6, "name": "Cold-pressed olive oil 250 ml", "price": 95, "tags": "oil;healthy;premium", "in_stock": true },
+  { "id": 7, "name": "Local garlic (3 pcs)", "price": 18, "tags": "vegetable;seasoning;local", "in_stock": true },
+  { "id": 8, "name": "Yellow onions 1 kg", "price": 29, "tags": "vegetable;base;farm", "in_stock": true },
+  { "id": 9, "name": "Fresh tomatoes 500 g", "price": 48, "tags": "vegetable;fresh;local", "in_stock": true },
+  { "id": 10, "name": "Czech artisanal pasta 500 g", "price": 44, "tags": "carbs;italian;artisan", "in_stock": true },
+  { "id": 11, "name": "Kladenská pečeně 300 g", "price": 89, "tags": "meat;pork;deli;cooked", "in_stock": true },
+  { "id": 12, "name": "Vepřové ve vlastní šťávě 300 g", "price": 95, "tags": "meat;pork;canned;cooked", "in_stock": true },
+  { "id": 13, "name": "Tradiční český Gothaj 500 g", "price": 125, "tags": "meat;pork;beef;deli;traditional", "in_stock": true },
+  { "id": 14, "name": "Vinná klobása 400 g", "price": 145, "tags": "meat;sausage;pork;beef;wine", "in_stock": true },
+  { "id": 15, "name": "Vánoční salám 350 g", "price": 115, "tags": "meat;salami;pork;beef;deli", "in_stock": true },
+  { "id": 16, "name": "Paštika s vepřovými játry 180 g", "price": 55, "tags": "meat;liver;pate;spread;canned", "in_stock": true }
+]
+
+
