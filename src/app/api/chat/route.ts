@@ -3,9 +3,15 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY environment variable is not set');
+  }
+  return new OpenAI({
+    apiKey: apiKey,
+  });
+}
 
 interface Product {
   id: number;
@@ -64,6 +70,7 @@ Reply strictly in JSON:
 Available products:
 ${productsJson}`;
 
+    const openai = getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
