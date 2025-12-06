@@ -36,9 +36,26 @@ export async function POST(request: NextRequest) {
     }
 
     // Read products from JSON file
-    const productsPath = path.join(process.cwd(), 'data', 'products.json');
-    const productsData = fs.readFileSync(productsPath, 'utf8');
-    const products = JSON.parse(productsData);
+    let products: Product[] = [];
+    try {
+      const productsPath = path.join(process.cwd(), 'data', 'products.json');
+      if (!fs.existsSync(productsPath)) {
+        console.error('Products file not found at:', productsPath);
+        throw new Error('Products database not found');
+      }
+      const productsData = fs.readFileSync(productsPath, 'utf8');
+      products = JSON.parse(productsData);
+    } catch (fileError) {
+      console.error('Error reading products file:', fileError);
+      return NextResponse.json(
+        {
+          reply: "I'm sorry, I couldn't access the product database. Please contact support.",
+          recipe: {},
+          items: []
+        },
+        { status: 500 }
+      );
+    }
 
     const availableProducts = products.filter((p: Product) => p.in_stock);
     const productsJson = JSON.stringify(availableProducts, null, 2);
@@ -117,20 +134,28 @@ ${productsJson}`;
 
   } catch (error) {
     console.error('Chat API error:', error);
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     
     // Provide more specific error messages
     let errorMessage = "I'm sorry, something went wrong. Please try again later.";
     let statusCode = 500;
     
     if (error instanceof Error) {
-      if (error.message.includes('OPENAI_API_KEY')) {
-        errorMessage = "OpenAI API key is not configured. Please set the OPENAI_API_KEY environment variable.";
+      console.error('Error name:', error.name);
+      console.error('Error message:', error.message);
+      
+      if (error.message.includes('OPENAI_API_KEY') || error.message.includes('apiKey')) {
+        errorMessage = "OpenAI API key is not configured. Please set the OPENAI_API_KEY environment variable on the server.";
         statusCode = 500;
       } else if (error.message.includes('No response from OpenAI')) {
         errorMessage = "I couldn't get a response from the AI. Please try again.";
         statusCode = 502;
+      } else if (error.message.includes('Products database')) {
+        errorMessage = "I couldn't access the product database. Please contact support.";
+        statusCode = 500;
       } else {
-        errorMessage = `Error: ${error.message}`;
+        // Don't expose internal error details to users, but log them
+        errorMessage = "I'm sorry, an unexpected error occurred. Please try again later.";
       }
     }
     
